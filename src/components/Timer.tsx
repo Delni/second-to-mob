@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
+import '../resources/styles/Timer.sass'
 
 type TimerProps = {
 	seconds: number
@@ -25,31 +26,39 @@ export const Timer: FunctionComponent<TimerProps> = ({ seconds }) => {
 		})
 	}
 
-	const reset = () => {
-		setState(initWith(seconds))
-	}
+	const reset = () => setState(initWith(seconds))
+
+	useEffect(() => setState(initWith(seconds)), [seconds])
 
 	useEffect(() => {
-		let timer: number | undefined;
 		if (currentTime > 0 && running) {
-			timer = window.setInterval(() => setState({
+			const timer = window.setInterval(() => setState({
 				running,
 				currentTime: currentTime - 1
 			}), 1000);
+			return () => window.clearInterval(timer)
 		} else {
 			setState({
 				...state,
 				running: false
 			})
 		}
-		return () => window.clearInterval(timer)
 	}, [currentTime, running]);
 
+	const progress = 137.5 * currentTime / seconds
+
 	return (
-		<div>
-			<div>{currentTime}</div>
-			<button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
-			<button onClick={reset}>Reset</button>
+		<div className="timer">
+			<div className="clock">
+				<svg viewBox="25 25 50 50">
+				<circle cx="50" cy="50" r="21.75" strokeDasharray={`${progress}, 200`}></circle>
+				</svg>
+				<span>{currentTime}</span>
+			</div>
+			<div className="actions">
+				<button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
+				<button onClick={reset}>Reset</button>
+			</div>
 		</div>
 	)
 }
