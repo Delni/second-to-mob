@@ -46,6 +46,9 @@ export const Timer: FunctionComponent<TimerProps> = ({ seconds }) => {
 	}, [currentTime, running]);
 
 	const progress = 137.5 * currentTime / seconds
+	const minutesPad = Math.floor(currentTime / 60).toString().padStart(2, '0')
+	const secondsPad = (currentTime % 60).toString().padStart(2, '0')
+	const time = `${minutesPad}:${secondsPad}`
 
 	return (
 		<div className="timer">
@@ -53,11 +56,15 @@ export const Timer: FunctionComponent<TimerProps> = ({ seconds }) => {
 				<svg viewBox="25 25 50 50">
 				<circle cx="50" cy="50" r="21.75" strokeDasharray={`${progress}, 200`}></circle>
 				</svg>
-				<span>{currentTime}</span>
+				<span>{time}</span>
 			</div>
 			<div className="actions">
-				<button onClick={toggleRunning}>{running ? 'Stop' : 'Play'}</button>
-				<button onClick={reset}>Reset</button>
+				<button onClick={toggleRunning} className={running ? 'active' : undefined}>
+					<div className={running ? ' resume' : 'play'}></div>
+				</button>
+				<button onClick={reset}>
+					<div className="stop"></div>
+				</button>
 			</div>
 		</div>
 	)
