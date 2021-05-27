@@ -59,9 +59,10 @@ export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
       : `Remaining time: ${state.timeRemaining.toFixed(2)}`}
     <br></br>
     <button
+      id="play-pause"
       onClick={() => playPause(state)}
     >
-      ⏯️
+      { state.tag === 'playing' ? '▶️' : '⏸' }
     </button>
     <button
       onClick={() => {
