@@ -14,9 +14,6 @@ function isPlaying(t: TimerState): t is Playing {
   return t.tag === "playing";
 }
 
-//type TimerState = {state:'stopped'} | {state:'paused', timeRemaining: number}| {state:'playing', timeRemaining: number}
-// https://github.com/Delni/second-to-mob/
-
 export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
   const STEP: number = 0.01;
   const [state, nextState] = useState<TimerState>({ tag: "stopped" });
