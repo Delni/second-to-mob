@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
+import './Timer.scss'
 
 type TimerProps = {
   time: number;
@@ -14,8 +15,15 @@ function isPlaying(t: TimerState): t is Playing {
   return t.tag === "playing";
 }
 
+
+function timerString(seconds: number): string {
+  const minutes = Math.floor(seconds / 60).toFixed(0).padStart(2, '0')
+  const realSeconds = (seconds % 60).toFixed(2).padStart(5, '0')
+  return `${minutes}:${realSeconds}`
+}
+
 export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
-  const STEP: number = 0.01;
+  const STEP: number = 1;
   const [state, nextState] = useState<TimerState>({ tag: "stopped" });
   let interval: number;
 
@@ -36,7 +44,7 @@ export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
             window.clearInterval(interval);
             nextState({ tag: "stopped" });
           }
-        }, 10);
+        }, STEP * 1000);
         return () => window.clearInterval(interval);
       }
     }
@@ -53,23 +61,31 @@ export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
     }
   }
 
-  return <div>
+  const percent = isStopped(state) ? 100 : (state.timeRemaining ?? time) / time * 100
+
+  return <div className="timer">
+    <span>Remaining time:</span>
     {isStopped(state)
-      ? state.tag
-      : `Remaining time: ${state.timeRemaining.toFixed(2)}`}
-    <br></br>
-    <button
-      id="play-pause"
-      onClick={() => playPause(state)}
-    >
-      { state.tag === 'playing' ? '▶️' : '⏸' }
-    </button>
-    <button
-      onClick={() => {
-        nextState({ tag: "stopped" });
-      }}
-    >
-      ⏹
-    </button>
+      ? timerString(time)
+      : timerString(state.timeRemaining)}
+    <div className="progress-wrapper">
+      <div className={"progress" + (percent <= 10 ? ' outtatime' : '') } style={{width: percent + '%'}}></div>
+    </div>
+    <div>
+      <button
+        id="play-pause"
+        onClick={() => playPause(state)}
+      >
+        { state.tag === 'playing' ? '⏸' : '▶️' }
+      </button>
+      <button
+        onClick={() => {
+          nextState({ tag: "stopped" });
+        }}
+      >
+        ⏹
+      </button>
+
+    </div>
   </div>;
 };

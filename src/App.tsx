@@ -6,8 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      Hello, World!
-      <Timer time={10}/>
+      <Timer time={60}/>
     </div>
   )
 }

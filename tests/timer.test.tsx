@@ -26,13 +26,13 @@ describe("Timer Component", () => {
   test("When the timer is started, seconds are displayed", () => {
     const playPauseButton = timerWrapper.find("#play-pause")
     playPauseButton.simulate('click')
-    expect(timerWrapper.html()).toContain("▶️");
+    expect(timerWrapper.html()).toContain('⏸');
     })
 
   test("Clicking two times on start/pause, pause the timer", () => {
     const playPauseButton = timerWrapper.find("#play-pause")
     playPauseButton.simulate('click')
     playPauseButton.simulate('click')
-    expect(playPauseButton.text()).toBe('⏸')
+    expect(playPauseButton.text()).toBe("▶️")
   })
 })
