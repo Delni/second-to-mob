@@ -1,12 +1,13 @@
-$dark-blue: #0b354e;
-$white: #dedede;
-$warm-yellow: #f8b677;
-$red: #f14268;
-$blue: #294981;
+@import './variables.scss';
 
 body {
+	height: 100vh;
+	margin: 0;
 	background-color: $blue;
 	color: $white;
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif
+	font-family: Arial, Helvetica, sans-serif;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
 }

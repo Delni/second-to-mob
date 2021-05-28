@@ -1,6 +1,4 @@
-$dark-blue: #0b354e;
-$warm-yellow: #f8b677;
-$red: #f14268;
+@import '../variables.scss';
 
 .timer {
 	font-size: 5em;
@@ -10,16 +8,21 @@ $red: #f14268;
 
 	span {
 		font-size: 0.5em;
+		color: $white;
 	};
+	&.outtatime {
+		color: $red;
+		.progress {
+			background-color: $red;
+		}
+	}
 	.progress {
 		height: 20px;
 		background-color: $warm-yellow;
 		border-radius: 20px;
 		transition: width .25s ease, background-color .5s ease;
 
-		&.outtatime {
-			background-color: $red;
-		}
+		
 
 		&-wrapper {
 			background-color: $dark-blue;

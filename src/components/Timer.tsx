@@ -23,7 +23,7 @@ function timerString(seconds: number): string {
 }
 
 export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
-  const STEP: number = 1;
+  const STEP: number = .01;
   const [state, nextState] = useState<TimerState>({ tag: "stopped" });
   let interval: number;
 
@@ -63,13 +63,13 @@ export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
 
   const percent = isStopped(state) ? 100 : (state.timeRemaining ?? time) / time * 100
 
-  return <div className="timer">
+  return <div className={"timer" + (percent <= 10 ? ' outtatime' : '') }>
     <span>Remaining time:</span>
     {isStopped(state)
       ? timerString(time)
       : timerString(state.timeRemaining)}
     <div className="progress-wrapper">
-      <div className={"progress" + (percent <= 10 ? ' outtatime' : '') } style={{width: percent + '%'}}></div>
+      <div className={"progress"} style={{width: percent + '%', transitionDuration: STEP.toString()}}></div>
     </div>
     <div>
       <button
