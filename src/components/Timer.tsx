@@ -8,6 +8,11 @@ type Stopped = { tag: "stopped" };
 type Paused = { tag: "paused"; timeRemaining: number };
 type Playing = { tag: "playing"; timeRemaining: number };
 type TimerState = Stopped | Paused | Playing;
+
+const STEP: number = .01;
+const VISUAL_STATE_TRANSITION_DURATION = 1;
+const WARNING_THRESHOLD = 0.3;
+
 function isStopped(t: TimerState): t is Stopped {
   return t.tag === "stopped";
 }
@@ -23,7 +28,6 @@ function timerString(seconds: number): string {
 }
 
 export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
-  const STEP: number = .01;
   const [state, nextState] = useState<TimerState>({ tag: "stopped" });
   let interval: number;
 
@@ -62,15 +66,19 @@ export const Timer: FunctionComponent<TimerProps> = ({ time }) => {
   }
 
   const percent = isStopped(state) ? 100 : (state.timeRemaining ?? time) / time * 100
+  const colorTransitionStart = (isStopped(state) ? time : (state.timeRemaining))  + VISUAL_STATE_TRANSITION_DURATION
+  const outoftime = colorTransitionStart <= WARNING_THRESHOLD * time
 
-  return <div className={"timer" + (percent <= 10 ? ' outtatime' : '') }>
-    <span>Remaining time:</span>
+  return <div className={"timer" + (outoftime ? ' outatime' : '') } style={{
+    transition: `color ${VISUAL_STATE_TRANSITION_DURATION}s ease`
+  }}>
+    <header className="session-name">
+      Session Name
+    </header>
     {isStopped(state)
       ? timerString(time)
       : timerString(state.timeRemaining)}
-    <div className="progress-wrapper">
-      <div className={"progress"} style={{width: percent + '%', transitionDuration: STEP.toString()}}></div>
-    </div>
+    <progress max="100" value={percent} className="mobtime-progress"/>
     <div>
       <button
         id="play-pause"

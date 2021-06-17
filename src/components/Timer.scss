@@ -4,32 +4,55 @@
 	font-size: 5em;
 	display: flex;
 	flex-flow: column;
-	align-items: center;
+	transition: color .5s ease;
+	color: $warm-yellow;
+	padding: 0 64px;
 
-	span {
-		font-size: 0.5em;
+	.session-name {
 		color: $white;
-	};
-	&.outtatime {
+		font-weight: 700;
+	}
+
+	&.outatime {
 		color: $red;
-		.progress {
-			background-color: $red;
+		.mobtime-progress {
+			&[value]::-moz-progress-bar,
+			&[value]::-webkit-progress-value {
+				background-color: $red;
+			}
 		}
 	}
-	.progress {
+	.mobtime-progress {
+		-webkit-appearance: none;
+		appearance: none;
 		height: 20px;
-		background-color: $warm-yellow;
 		border-radius: 20px;
-		transition: width .25s ease, background-color .5s ease;
+		width: 4.2em;
+		background-color: $dark-blue;
+		border: none;
+		overflow: hidden;
+
+		&[value]::-moz-progress-bar,
+		&[value]::-webkit-progress-value {
+			background-color: $warm-yellow;	
+			border-radius: 20px;
+			transition: background-color 1s ease;
+		}
+	}
+	// .progress {
+	// 	height: 20px;
+	// 	background-color: $warm-yellow;
+	// 	border-radius: 20px;
+	// 	transition: width .25s ease, background-color .5s ease;
 
 		
 
-		&-wrapper {
-			background-color: $dark-blue;
-			width: 4.2em;
-			border-radius: 20px;
-			overflow: hidden;
-		}
-	}
+	// 	&-wrapper {
+	// 		background-color: $dark-blue;
+	// 		width: 4.2em;
+	// 		border-radius: 20px;
+	// 		overflow: hidden;
+	// 	}
+	// }
 
 }

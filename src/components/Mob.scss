@@ -1,0 +1,64 @@
+@import '../variables.scss';
+
+.mob {
+    header {
+        display: flex;
+        flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 300px;
+
+        .add-button {
+			cursor: pointer;
+            border-radius: 20px;
+            height: 60px;
+			width: 60px;
+            font-size: 60px;
+			display: flex;
+			padding-bottom: 12.5px;
+			align-items: center;
+			justify-content: center;
+			transition: all .25s ease-out;
+
+            &:not(:hover) {
+                background-color: $blue;
+                color: $dark-blue;
+                border:5px solid $dark-blue;
+            }
+
+			&:focus {
+				color: $white;
+                background-color: $blue;
+			}
+
+			&:hover {
+                color: $warm-yellow;
+                background-color: $dark-blue;
+				// border; px  color;
+                border: 0px solid transparent;
+			}
+        }
+    }
+    ul {
+        display: flex;
+        flex-flow: column;
+
+        li {
+            height: 60px;
+            background-color: $dark-blue;
+            color: $white;
+            width: inherit;
+            margin-bottom: 10px;
+            list-style-image: url();
+            display: flex;
+            align-items: center;
+
+            .avatar {
+
+            }
+            .name {
+            font-size: 1.4em;
+            }
+        }
+    }
+}
